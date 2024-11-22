@@ -8,7 +8,7 @@ import LoanDetails from "./LoanDetails";
 
 
 const LoanCalculator: React.FC = () => {
-    const {handleSubmit, control, watch, reset, setValue} = useForm<FormData>({
+    const {handleSubmit, control, watch, setValue} = useForm<FormData>({
         defaultValues: {
             loanType: 'online_microloan',
             loanAmount: 0,
