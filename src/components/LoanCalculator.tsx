@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { TextField, Button, Select, MenuItem, Typography, Box, Slider } from '@mui/material';
-import { calculateLoanRepaymentSchedule } from '../utils/calculateLoanRepayment';
+import React, {useState} from 'react';
+import {useForm, Controller} from 'react-hook-form';
+import {TextField, Button, Select, MenuItem, Typography, Box, Slider} from '@mui/material';
+import {calculateLoanRepaymentSchedule} from '../utils/calculateLoanRepayment';
 import LoanRepaymentTable from "./LoanRePaymentTable"
 import {LoanRow, FormData} from "../types/LoanRow";
 import LoanDetails from "./LoanDetails";
 
 
-
-
 const LoanCalculator: React.FC = () => {
-    const { handleSubmit, control, watch, reset, setValue } = useForm<FormData>({
+    const {handleSubmit, control, watch, reset, setValue} = useForm<FormData>({
         defaultValues: {
             loanType: 'online_microloan',
             loanAmount: 0,
@@ -51,7 +49,7 @@ const LoanCalculator: React.FC = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 1400, margin: '0 auto', padding: 2 , backgroundColor:"#f8f8f8"}}>
+        <Box sx={{maxWidth: 1400, margin: '0 auto', padding: 2, backgroundColor: "#f8f8f8"}}>
             <Typography variant="h4" align="center" gutterBottom>
                 Loan Calculator
             </Typography>
@@ -64,87 +62,87 @@ const LoanCalculator: React.FC = () => {
                         mb: 3,
                     }}
                 >
-                <Controller
-                    name="loanType"
-                    control={control}
-                    render={({ field }) => (
-                        <Select {...field} fullWidth sx={{
-                            height: "65px",
-                            marginTop:"17px",
-                            background: "#fff",
-                            border: 'none',
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                        }}>
-                            <MenuItem value="online_microloan">Online Microloan</MenuItem>
-                            <MenuItem value="personal_loan">Personal loan</MenuItem>
-                            <MenuItem value="microloan">Microloan</MenuItem>
-                        </Select>
-                    )}
-                />
-                <Box sx={{ position: 'relative', mb: 2}}>
                     <Controller
-                        name="loanAmount"
+                        name="loanType"
                         control={control}
-                        render={({ field }) => (
-                            <>
-                                <TextField
-                                    {...field}
-                                    value={loanAmount}
-                                    onChange={(e) => setValue('loanAmount', Number(e.target.value))}
-                                    label="Loan Amount (UZS)"
-                                    type="number"
-                                    fullWidth
-                                    margin="normal"
-                                    sx={{
-                                        background:'#fff',
-                                        '& .MuiInputBase-root': {
-                                            borderBottom: 'none',
-                                            paddingBottom: '0px',
-                                        },
-                                        '& .MuiOutlinedInput-notchedOutline': {
-                                            border: 'none',
-                                        },
-                                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                                            border: 'none',
-                                        },
-                                        '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                            border: 'none',
-                                        },
-                                    }}
-                                />
-                                <Slider
-                                    value={loanAmount}
-                                    onChange={(_, value) => setValue('loanAmount', value as number)}
-                                    min={0}
-                                    max={50000000}
-                                    step={50000}
-                                    sx={{
-                                        position: 'absolute',
-                                        top:"72%",
-                                        bottom: 0,
-                                        left: 0,
-                                        right: 0,
-                                        color: '#61bf39',
-                                    }}
-                                    valueLabelDisplay="auto"
-                                />
-                            </>
+                        render={({field}) => (
+                            <Select {...field} fullWidth sx={{
+                                height: "65px",
+                                marginTop: "17px",
+                                background: "#fff",
+                                border: 'none',
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                            }}>
+                                <MenuItem value="online_microloan">Online Microloan</MenuItem>
+                                <MenuItem value="personal_loan">Personal loan</MenuItem>
+                                <MenuItem value="microloan">Microloan</MenuItem>
+                            </Select>
                         )}
                     />
-                </Box>
-                    <Box sx={{ position: 'relative', mb: 2}}>
+                    <Box sx={{position: 'relative', mb: 2}}>
+                        <Controller
+                            name="loanAmount"
+                            control={control}
+                            render={({field}) => (
+                                <>
+                                    <TextField
+                                        {...field}
+                                        value={loanAmount}
+                                        onChange={(e) => setValue('loanAmount', Number(e.target.value))}
+                                        label="Loan Amount (UZS)"
+                                        type="number"
+                                        fullWidth
+                                        margin="normal"
+                                        sx={{
+                                            background: '#fff',
+                                            '& .MuiInputBase-root': {
+                                                borderBottom: 'none',
+                                                paddingBottom: '0px',
+                                            },
+                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                border: 'none',
+                                            },
+                                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                                border: 'none',
+                                            },
+                                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                border: 'none',
+                                            },
+                                        }}
+                                    />
+                                    <Slider
+                                        value={loanAmount}
+                                        onChange={(_, value) => setValue('loanAmount', value as number)}
+                                        min={0}
+                                        max={50000000}
+                                        step={50000}
+                                        sx={{
+                                            position: 'absolute',
+                                            top: "72%",
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0,
+                                            color: '#61bf39',
+                                        }}
+                                        valueLabelDisplay="auto"
+                                    />
+                                </>
+                            )}
+                        />
+                    </Box>
+                    <Box sx={{position: 'relative', mb: 2}}>
                         <Controller
                             name="loanTerm"
                             control={control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <>
                                     <TextField
                                         {...field}
@@ -155,7 +153,7 @@ const LoanCalculator: React.FC = () => {
                                         fullWidth
                                         margin="normal"
                                         sx={{
-                                            background:'#fff',
+                                            background: '#fff',
                                             '& .MuiInputBase-root': {
                                                 borderBottom: 'none',
                                                 paddingBottom: '0px',
@@ -178,7 +176,7 @@ const LoanCalculator: React.FC = () => {
                                         max={36}
                                         sx={{
                                             position: 'absolute',
-                                            top:"72%",
+                                            top: "72%",
                                             bottom: 0,
                                             left: 0,
                                             right: 0,
@@ -190,140 +188,146 @@ const LoanCalculator: React.FC = () => {
                             )}
                         />
                     </Box>
-                <Controller
-                    name="interestRate"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField {...field} label="Interest Rate (%)" type="number" fullWidth margin="normal" sx={{
-                            background:"#fff",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },}}/>
-                    )}
-                />
-                <Controller
-                    name="calculationType"
-                    control={control}
-                    render={({ field }) => (
-                        <Select {...field} fullWidth sx={{
-                            height: '60px',
-                            marginTop:"17px",
-                            background:"#fff",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },}}>
-                            <MenuItem value="Annuity">Annuity</MenuItem>
-                            <MenuItem value="Custom">Custom</MenuItem>
-                        </Select>
-                    )}
-                />
+                    <Controller
+                        name="interestRate"
+                        control={control}
+                        render={({field}) => (
+                            <TextField {...field} label="Interest Rate (%)" type="number" fullWidth margin="normal"
+                                       sx={{
+                                           background: "#fff",
+                                           '& .MuiOutlinedInput-notchedOutline': {
+                                               border: 'none',
+                                           },
+                                           '&:hover .MuiOutlinedInput-notchedOutline': {
+                                               border: 'none',
+                                           },
+                                           '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                               border: 'none',
+                                           },
+                                       }}/>
+                        )}
+                    />
+                    <Controller
+                        name="calculationType"
+                        control={control}
+                        render={({field}) => (
+                            <Select {...field} fullWidth sx={{
+                                height: '60px',
+                                marginTop: "17px",
+                                background: "#fff",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                            }}>
+                                <MenuItem value="Annuity">Annuity</MenuItem>
+                                <MenuItem value="Custom">Custom</MenuItem>
+                            </Select>
+                        )}
+                    />
                 </Box>
                 <Typography variant="h6" mt={2} mb={1}>
                     Additional Expenses
                 </Typography>
-                    <Box
-                        sx={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
-                            gap: 2,
-                            mb: 3,
-                        }}
-                    >
-                <Controller
-                    name="insuranceCosts"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField {...field} label="Insurance Costs" type="number" fullWidth margin="normal" sx={{
-                            background:"#fff",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },}}/>
-                    )}
-                />
-                <Controller
-                    name="notaryCosts"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField {...field} label="Notary Costs" type="number" fullWidth margin="normal" sx={{
-                            background:"#fff",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },}}/>
-                    )}
-                />
-                <Controller
-                    name="collateralCosts"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField {...field} label="Collateral Costs" type="number" fullWidth margin="normal" sx={{
-                            background:"#fff",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },}} />
-                    )}
-                />
-                <Controller
-                    name="otherCosts"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField {...field} label="Other Costs" type="number" fullWidth margin="normal"  sx={{
-                            background:"#fff",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },}}/>
-                    )}
-                />
-                        <Button type="submit" variant="contained" sx={{
-                            background:'#61bf39',
-                            color:'#fff',
-                            height:'60px',
-                            marginTop:"17px"
-                        }}>
-                            Calculate
-                        </Button>
+                <Box
+                    sx={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gap: 2,
+                        mb: 3,
+                    }}
+                >
+                    <Controller
+                        name="insuranceCosts"
+                        control={control}
+                        render={({field}) => (
+                            <TextField {...field} label="Insurance Costs" type="number" fullWidth margin="normal" sx={{
+                                background: "#fff",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                            }}/>
+                        )}
+                    />
+                    <Controller
+                        name="notaryCosts"
+                        control={control}
+                        render={({field}) => (
+                            <TextField {...field} label="Notary Costs" type="number" fullWidth margin="normal" sx={{
+                                background: "#fff",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                            }}/>
+                        )}
+                    />
+                    <Controller
+                        name="collateralCosts"
+                        control={control}
+                        render={({field}) => (
+                            <TextField {...field} label="Collateral Costs" type="number" fullWidth margin="normal" sx={{
+                                background: "#fff",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                            }}/>
+                        )}
+                    />
+                    <Controller
+                        name="otherCosts"
+                        control={control}
+                        render={({field}) => (
+                            <TextField {...field} label="Other Costs" type="number" fullWidth margin="normal" sx={{
+                                background: "#fff",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                },
+                            }}/>
+                        )}
+                    />
+                    <Button type="submit" variant="contained" sx={{
+                        background: '#61bf39',
+                        color: '#fff',
+                        height: '60px',
+                        marginTop: "17px"
+                    }}>
+                        Calculate
+                    </Button>
                 </Box>
-
-
             </form>
-            {result !== null &&  <LoanDetails result={result}/>}
 
-            {result !== null && <LoanRepaymentTable schedule={schedule} />}
+            {result !== null && <LoanDetails result={result}/>}
+
+            {result !== null && <LoanRepaymentTable schedule={schedule}/>}
         </Box>
     );
 };
