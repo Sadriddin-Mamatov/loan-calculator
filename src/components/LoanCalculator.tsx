@@ -3,19 +3,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Select, MenuItem, Typography, Box, Slider } from '@mui/material';
 import { calculateLoanRepaymentSchedule } from '../utils/calculateLoanRepayment';
 import LoanRepaymentTable from "./LoanRePaymentTable"
-import {LoanRow} from "../types/LoanRow";
+import {LoanRow, FormData} from "../types/LoanRow";
+import LoanDetails from "./LoanDetails";
 
-interface FormData {
-    loanType: string;
-    loanAmount: number;
-    loanTerm: number;
-    interestRate: number;
-    calculationType: string | any;
-    insuranceCosts: number;
-    notaryCosts: number;
-    collateralCosts: number;
-    otherCosts: number;
-}
+
 
 
 const LoanCalculator: React.FC = () => {
@@ -23,7 +14,7 @@ const LoanCalculator: React.FC = () => {
         defaultValues: {
             loanType: 'online_microloan',
             loanAmount: 0,
-            loanTerm: 3,
+            loanTerm: 1,
             interestRate: 0,
             calculationType: 'Custom',
             insuranceCosts: 0,
@@ -200,31 +191,6 @@ const LoanCalculator: React.FC = () => {
                         />
                     </Box>
                 <Controller
-                    name="loanTerm"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField {...field}
-                                   label="Loan Terms (months)"
-                                   fullWidth
-                                   placeholder={"month"}
-                                   margin="normal"
-                                   sx={{
-                                       height: '60px',
-                                       background: "#fff",
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                border: 'none',
-                            },
-                        }}/>
-                    )}
-
-                />
-                <Controller
                     name="interestRate"
                     control={control}
                     render={({ field }) => (
@@ -355,62 +321,8 @@ const LoanCalculator: React.FC = () => {
 
 
             </form>
-            {result !== null &&  <Box sx={{
-                background:'#61bf39',
-                color:"#fff",
-                padding:'30px',
-            }}>
-                <Typography variant="h4" align="center" gutterBottom>
-                    Loan Details
-                </Typography>
-                <Box
-                sx={{
-                    display:'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)'
-                }}
-                >
-                    <Box sx={{
+            {result !== null &&  <LoanDetails result={result}/>}
 
-                    }}>
-                        <Typography variant="h5" align="left" >
-                            {result.loanType}
-                        </Typography>
-                        <Typography variant="caption" align="left" >
-                            Loan name
-                        </Typography>
-                    </Box>
-                    <Box sx={{
-
-                    }}>
-                        <Typography variant="h5" align="left" >
-                            {result.loanTerm} month
-                        </Typography>
-                        <Typography variant="caption" align="left" >
-                            Term
-                        </Typography>
-                    </Box>
-                    <Box sx={{
-
-                    }}>
-                        <Typography variant="h5" align="left" >
-                            {result.interestRate} %
-                        </Typography>
-                        <Typography variant="caption" align="left" >
-                           Interest rate per year
-                        </Typography>
-                    </Box>
-                    <Box sx={{
-
-                    }}>
-                        <Typography variant="h5" align="left" >
-                            {result.loanType}
-                        </Typography>
-                        <Typography variant="caption" align="left" >
-                            Loan Total Amount
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>}
             {result !== null && <LoanRepaymentTable schedule={schedule} />}
         </Box>
     );

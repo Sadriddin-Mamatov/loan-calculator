@@ -1,4 +1,4 @@
-import { LoanRow } from '../types/LoanRow';
+import {LoanRow} from '../types/LoanRow';
 
 export const calculateLoanRepaymentSchedule = (
     loanAmount: number,
@@ -12,12 +12,12 @@ export const calculateLoanRepaymentSchedule = (
 ): LoanRow[] => {
     const monthlyInterestRate = interestRate / 100 / 12;
     const schedule: LoanRow[] = [];
-    let remainingBalance = loanAmount;
+    let remainingBalance = Number(loanAmount);
 
     for (let month = 1; month <= loanTerm; month++) {
-        let principalDebt = 0;
         let interestAmount = 0;
         let repaymentAmount = 0;
+        let principalDebt = 0;
 
         if (calculationType === 'Annuity') {
             const annuityFactor =
@@ -26,11 +26,10 @@ export const calculateLoanRepaymentSchedule = (
             repaymentAmount = loanAmount * annuityFactor;
             interestAmount = remainingBalance * monthlyInterestRate;
             principalDebt = repaymentAmount - interestAmount;
-        } else if  (calculationType === 'Custom') {
-
+        } else if (calculationType === 'Custom'){
             interestAmount = remainingBalance * monthlyInterestRate;
-            principalDebt = remainingBalance / loanTerm;
             repaymentAmount = principalDebt + interestAmount;
+            principalDebt = remainingBalance / loanTerm;
 
             if (principalDebt > remainingBalance) {
                 principalDebt = remainingBalance;
@@ -38,21 +37,24 @@ export const calculateLoanRepaymentSchedule = (
             }
         }
 
+        const commissionFee = (loanAmount * interestRate) / 100;
+
         const totalCosts =
             insuranceCosts +
             notaryCosts +
             collateralCosts +
             otherCosts;
-        const thirdPartyCosts=
-                insuranceCosts+
-                notaryCosts+
-                collateralCosts;
+
+        const thirdPartyCosts =
+            insuranceCosts +
+            notaryCosts +
+            collateralCosts;
 
         schedule.push({
             month,
             loanBalance: Math.max(remainingBalance, 0),
             principalDebt: Math.max(principalDebt, 0),
-            interestAmount: Math.max(interestAmount, 0),
+            commissionFee: Math.max(commissionFee, 0),
             thirdPartyCosts,
             otherCosts,
             repaymentAmount: Math.max(repaymentAmount, 0) + totalCosts,
