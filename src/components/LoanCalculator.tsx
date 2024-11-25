@@ -32,6 +32,7 @@ const LoanCalculator: React.FC = () => {
     const notaryCosts = watch('notaryCosts');
     const collateralCosts = watch('collateralCosts');
     const otherCosts = watch('otherCosts');
+
     const onSubmit = (data: FormData) => {
         setResult(data);
         const repaymentSchedule = calculateLoanRepaymentSchedule(
@@ -50,7 +51,7 @@ const LoanCalculator: React.FC = () => {
 
     return (
         <Box sx={{maxWidth: 1400, margin: '0 auto', padding: 2, backgroundColor: "#f8f8f8"}}>
-            <Typography variant="h4" align="center" gutterBottom>
+            <Typography variant="h3" align="center" gutterBottom>
                 Loan Calculator
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -66,21 +67,11 @@ const LoanCalculator: React.FC = () => {
                         name="loanType"
                         control={control}
                         render={({field}) => (
-                            <Select {...field} fullWidth sx={{
-                                height: "65px",
-                                marginTop: "17px",
-                                background: "#fff",
-                                border: 'none',
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                            }}>
+                            <Select
+                                {...field}
+                                fullWidth
+                                className="custom-input"
+                            >
                                 <MenuItem value="online_microloan">Online Microloan</MenuItem>
                                 <MenuItem value="personal_loan">Personal loan</MenuItem>
                                 <MenuItem value="microloan">Microloan</MenuItem>
@@ -101,22 +92,7 @@ const LoanCalculator: React.FC = () => {
                                         type="number"
                                         fullWidth
                                         margin="normal"
-                                        sx={{
-                                            background: '#fff',
-                                            '& .MuiInputBase-root': {
-                                                borderBottom: 'none',
-                                                paddingBottom: '0px',
-                                            },
-                                            '& .MuiOutlinedInput-notchedOutline': {
-                                                border: 'none',
-                                            },
-                                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                border: 'none',
-                                            },
-                                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                border: 'none',
-                                            },
-                                        }}
+                                        className="custom-input"
                                     />
                                     <Slider
                                         value={loanAmount}
@@ -152,22 +128,7 @@ const LoanCalculator: React.FC = () => {
                                         type="number"
                                         fullWidth
                                         margin="normal"
-                                        sx={{
-                                            background: '#fff',
-                                            '& .MuiInputBase-root': {
-                                                borderBottom: 'none',
-                                                paddingBottom: '0px',
-                                            },
-                                            '& .MuiOutlinedInput-notchedOutline': {
-                                                border: 'none',
-                                            },
-                                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                border: 'none',
-                                            },
-                                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                border: 'none',
-                                            },
-                                        }}
+                                        className="custom-input"
                                     />
                                     <Slider
                                         value={loanTerm}
@@ -192,46 +153,28 @@ const LoanCalculator: React.FC = () => {
                         name="interestRate"
                         control={control}
                         render={({field}) => (
-                            <TextField {...field} label="Interest Rate (%)" type="number" fullWidth margin="normal"
-                                       sx={{
-                                           background: "#fff",
-                                           '& .MuiOutlinedInput-notchedOutline': {
-                                               border: 'none',
-                                           },
-                                           '&:hover .MuiOutlinedInput-notchedOutline': {
-                                               border: 'none',
-                                           },
-                                           '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                               border: 'none',
-                                           },
-                                       }}/>
+                            <TextField
+                                {...field}
+                                label="Interest Rate (%)"
+                                type="number"
+                                fullWidth
+                                margin="normal"
+                                className="custom-input"
+                            />
                         )}
                     />
                     <Controller
                         name="calculationType"
                         control={control}
                         render={({field}) => (
-                            <Select {...field} fullWidth sx={{
-                                height: '60px',
-                                marginTop: "17px",
-                                background: "#fff",
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                            }}>
+                            <Select {...field} fullWidth className="custom-input">
                                 <MenuItem value="Annuity">Annuity</MenuItem>
                                 <MenuItem value="Custom">Custom</MenuItem>
                             </Select>
                         )}
                     />
                 </Box>
-                <Typography variant="h6" mt={2} mb={1}>
+                <Typography variant="h4" mt={2} mb={1}>
                     Additional Expenses
                 </Typography>
                 <Box
@@ -246,72 +189,56 @@ const LoanCalculator: React.FC = () => {
                         name="insuranceCosts"
                         control={control}
                         render={({field}) => (
-                            <TextField {...field} label="Insurance Costs" type="number" fullWidth margin="normal" sx={{
-                                background: "#fff",
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                            }}/>
+                            <TextField
+                                {...field}
+                                label="Insurance Costs"
+                                type="number"
+                                fullWidth
+                                margin="normal"
+                                className="custom-input"
+                            />
                         )}
                     />
                     <Controller
                         name="notaryCosts"
                         control={control}
                         render={({field}) => (
-                            <TextField {...field} label="Notary Costs" type="number" fullWidth margin="normal" sx={{
-                                background: "#fff",
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                            }}/>
+                            <TextField
+                                {...field}
+                                label="Notary Costs"
+                                type="number"
+                                fullWidth
+                                margin="normal"
+                                className="custom-input"
+                            />
                         )}
                     />
                     <Controller
                         name="collateralCosts"
                         control={control}
                         render={({field}) => (
-                            <TextField {...field} label="Collateral Costs" type="number" fullWidth margin="normal" sx={{
-                                background: "#fff",
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                            }}/>
+                            <TextField
+                                {...field}
+                                label="Collateral Costs"
+                                type="number"
+                                fullWidth
+                                margin="normal"
+                                className="custom-input"
+                            />
                         )}
                     />
                     <Controller
                         name="otherCosts"
                         control={control}
                         render={({field}) => (
-                            <TextField {...field} label="Other Costs" type="number" fullWidth margin="normal" sx={{
-                                background: "#fff",
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    border: 'none',
-                                },
-                            }}/>
+                            <TextField
+                                {...field}
+                                label="Other Costs"
+                                type="number"
+                                fullWidth
+                                margin="normal"
+                                className="custom-input"
+                            />
                         )}
                     />
                     <Button type="submit" variant="contained" sx={{
