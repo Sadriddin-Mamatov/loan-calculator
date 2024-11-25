@@ -26,6 +26,7 @@ const LoanRepaymentTable: React.FC<LoanRepaymentTableProps> = ({ schedule }) => 
                         <TableCell>Commission Fee</TableCell>
                         <TableCell>Third Party Costs</TableCell>
                         <TableCell>Other Costs</TableCell>
+                        <TableCell>Monthly Interest Amount</TableCell>
                         <TableCell>Repayment Amount</TableCell>
                     </TableRow>
                 </TableHead>
@@ -35,9 +36,10 @@ const LoanRepaymentTable: React.FC<LoanRepaymentTableProps> = ({ schedule }) => 
                             <TableCell>{row.month}</TableCell>
                             <TableCell>{Number(row.loanBalance).toFixed(2)}</TableCell>
                             <TableCell>{Number(row.principalDebt).toFixed(2)}</TableCell>
-                            <TableCell>{Number(0.00).toFixed(2)}</TableCell>
-                            <TableCell>{row.thirdPartyCosts}</TableCell>
-                            <TableCell>{row.otherCosts}</TableCell>
+                            <TableCell>{Number(row.commissionFee).toFixed(2)}</TableCell>
+                            <TableCell>{Number(row.thirdPartyCosts).toFixed(2)}</TableCell>
+                            <TableCell>{Number(row.otherCosts).toFixed(2)}</TableCell>
+                            <TableCell>{row.monthlyInterest.toFixed(2)}</TableCell>
                             <TableCell>{Number(row.repaymentAmount).toFixed(2)}</TableCell>
                         </TableRow>
                     ))}

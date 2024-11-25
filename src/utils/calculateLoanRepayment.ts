@@ -11,58 +11,62 @@ export const calculateLoanRepaymentSchedule = (
     otherCosts: number,
 ): LoanRow[] => {
     const monthlyInterestRate = interestRate / 100 / 12;
-    const schedule: LoanRow[] = [];
-    let remainingBalance = Number(loanAmount);
+    let schedule: LoanRow[] = [];
+    const thirdPartyCosts = Number(insuranceCosts) + Number(notaryCosts) + Number(collateralCosts);
 
-    for (let month = 1; month <= loanTerm; month++) {
-        let interestAmount = 0;
-        let repaymentAmount = 0;
-        let principalDebt = 0;
+    const other = 0.00;
+
+    const commissionFee = 0.00;
 
         if (calculationType === 'Annuity') {
             const annuityFactor =
                 (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTerm)) /
                 (Math.pow(1 + monthlyInterestRate, loanTerm) - 1);
-            repaymentAmount = loanAmount * annuityFactor;
-            interestAmount = remainingBalance * monthlyInterestRate;
-            principalDebt = repaymentAmount - interestAmount;
-        } else if (calculationType === 'Custom'){
-            interestAmount = remainingBalance * monthlyInterestRate;
-            repaymentAmount = principalDebt + interestAmount;
-            principalDebt = remainingBalance / loanTerm;
 
-            if (principalDebt > remainingBalance) {
-                principalDebt = remainingBalance;
-                repaymentAmount = principalDebt + interestAmount;
+            const monthlyRepayment = loanAmount * annuityFactor;
+
+            let remainingBalance = loanAmount;
+
+                for (let i = 1; i <= loanTerm; i++) {
+                    const monthlyInterest = remainingBalance * monthlyInterestRate;
+                    const principalDebt = monthlyRepayment - monthlyInterest;
+
+                    schedule.push({
+                        month: i,
+                        loanBalance: remainingBalance,
+                        principalDebt,
+                        monthlyInterest,
+                        thirdPartyCosts,
+                        otherCosts:other,
+                        commissionFee,
+                        repaymentAmount: monthlyRepayment,
+                    });
+
+                    remainingBalance -= principalDebt;
+                }
+        } else if (calculationType === 'Custom') {
+            let remainingBalance = loanAmount;
+            const principalPerMonth = loanAmount / loanTerm;
+
+            for (let i = 1; i <= loanTerm; i++) {
+                const monthlyInterest = remainingBalance * monthlyInterestRate;
+                const repaymentAmount = principalPerMonth + monthlyInterest;
+
+                schedule.push({
+                    month: i,
+                    loanBalance: remainingBalance,
+                    principalDebt: principalPerMonth,
+                    monthlyInterest,
+                    repaymentAmount,
+                    thirdPartyCosts,
+                    otherCosts:other,
+                    commissionFee,
+                });
+
+                remainingBalance -= principalPerMonth;
             }
+
+
         }
-
-        const commissionFee = (loanAmount * interestRate) / 100;
-
-        const totalCosts =
-            insuranceCosts +
-            notaryCosts +
-            collateralCosts +
-            otherCosts;
-
-        const thirdPartyCosts =
-            insuranceCosts +
-            notaryCosts +
-            collateralCosts;
-
-        schedule.push({
-            month,
-            loanBalance: Math.max(remainingBalance, 0),
-            principalDebt: Math.max(principalDebt, 0),
-            commissionFee: Math.max(commissionFee, 0),
-            thirdPartyCosts,
-            otherCosts,
-            repaymentAmount: Math.max(repaymentAmount, 0) + totalCosts,
-        });
-
-        remainingBalance -= principalDebt;
-        if (remainingBalance <= 0) break;
-    }
-
-    return schedule;
-};
+        return schedule;
+}

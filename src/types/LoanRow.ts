@@ -2,10 +2,11 @@ export interface LoanRow {
     month: number;
     loanBalance: number;
     principalDebt: number;
-    commissionFee: number;
-    thirdPartyCosts: number;
-    otherCosts: number;
+    monthlyInterest:number;
     repaymentAmount: number;
+    thirdPartyCosts:number;
+    otherCosts:number,
+    commissionFee:number
 }
 export interface FormData {
     loanType: string;
